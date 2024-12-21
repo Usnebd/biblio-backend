@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: application
+    #data:
+      #mongodb:
+       # uri: mongodb://mongoadmin:bdung@localhost:27017/admin
+    #api_key: AIzaSyDA-qRabefb1fttkEvEQsyAesCpzAC5qxA

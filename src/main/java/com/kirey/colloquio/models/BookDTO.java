@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class BookOutputDTO {
+public class BookDTO {
     private String id;
     private String title;
     private String author;

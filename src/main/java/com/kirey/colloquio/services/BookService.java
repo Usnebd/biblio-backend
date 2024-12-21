@@ -15,6 +15,9 @@ public class BookService {
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
+    }
     public List<BookDTO> getAllBooks() {
         List<BookDTO> bookList = new ArrayList<>();
         List<Book> books;

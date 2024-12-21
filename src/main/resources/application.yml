@@ -1,7 +1,4 @@
 spring:
-  application:
-    name: application
-    data:
-      mongodb:
-        uri: mongodb://tommaso:kirey@localhost:27017/admin
-    
+  data:
+    mongodb:
+      uri: mongodb://tommaso:kirey@localhost:27017/admin

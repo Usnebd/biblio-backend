@@ -1,12 +1,10 @@
 package com.kirey.colloquio.services;
 
 import com.kirey.colloquio.domain.Book;
-import com.kirey.colloquio.models.BookDTO;
 import com.kirey.colloquio.repositories.BookRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -18,16 +16,18 @@ public class BookService {
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
-    public List<BookDTO> getAllBooks() {
-        List<BookDTO> bookList = new ArrayList<>();
+    public List<Book> getAllBooks() {
         List<Book> books;
         books = bookRepository.findAll();
-        for(Book book: books){
-            bookList.add(bookMap(book));
-        }
-        return bookList;
+        return books;
     }
-    public BookDTO bookMap(Book book){
-        return new BookDTO(book.getId(), book.getTitle(), book.getAuthor(), book.getDescription(), book.getPublishDate(), book.getPrice());
+    public Book deleteBook(String id) {
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isPresent()) {
+            bookRepository.deleteById(id);
+            return book.get(); // Restituisce il libro eliminato
+        } else {
+            return null; // Restituisce null se il libro non è stato trovato
+        }
     }
 }

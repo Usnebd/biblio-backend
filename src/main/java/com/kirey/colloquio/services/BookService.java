@@ -5,7 +5,6 @@ import com.kirey.colloquio.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -20,13 +19,11 @@ public class BookService {
         books = bookRepository.findAll();
         return books;
     }
-    public Book deleteBook(String id) {
-        Optional<Book> book = bookRepository.findById(id);
-        if (book.isPresent()) {
+    public boolean deleteBookById(String id) {
+        if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
-            return book.get(); // Restituisce il libro eliminato
-        } else {
-            return null; // Restituisce null se il libro non è stato trovato
+            return true; // Eliminazione avvenuta con successo
         }
+        return false; // Nessun record trovato con quell'ID
     }
 }

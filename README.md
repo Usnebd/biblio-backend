@@ -1,2 +1,0 @@
-BiblioApp Back-End è un'applicazione Spring Boot progettata per gestire un sistema di gestione libri. Il progetto fornisce una serie di API RESTful che consentono di eseguire operazioni di CRUD (Create, Read, Update, Delete) su libri, supportando anche la gestione degli utenti, se previsto in futuro.
-Il database utilizzato è MongoDB, un database NoSQL che memorizza i dati in formato JSON-like. L'applicazione è stata dockerizzata per facilitare la gestione e l'isolamento del servizio database MongoDB.

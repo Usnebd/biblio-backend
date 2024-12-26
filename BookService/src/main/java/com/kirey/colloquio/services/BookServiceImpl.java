@@ -2,6 +2,7 @@ package com.kirey.colloquio.services;
 
 import com.kirey.colloquio.domain.Book;
 import com.kirey.colloquio.repositories.BookRepository;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,10 +19,11 @@ public class BookServiceImpl implements BookService{
         return books;
     }
 
+    public Book getBookById(String id){
+        return bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+    }
+
     public Book createBook(Book book) {
-        if (bookRepository.existsByTitle(book.getTitle())) {
-            throw new IllegalArgumentException("Book already exists");
-        }
         return bookRepository.save(book);
     }
 
@@ -32,11 +34,9 @@ public class BookServiceImpl implements BookService{
         bookRepository.deleteById(id);
     }
 
-    public void updateBook(Book book, String id){
-        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book doesn't exist"));
-        if (!existingBook.getId().equals(id) && book.getTitle().equals(existingBook.getTitle())){
-            throw new IllegalArgumentException("Cannot have multiple books with same title");
-        }
+    public void updateBook(Book book, String id) {
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Book doesn't exist"));
         bookRepository.save(book);
     }
 }

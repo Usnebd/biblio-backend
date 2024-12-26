@@ -3,4 +3,5 @@ spring:
     name: "book-service"
   data:
     mongodb:
+      auto-index-creation: true
       uri: mongodb://tommaso:kirey@localhost:27017/admin

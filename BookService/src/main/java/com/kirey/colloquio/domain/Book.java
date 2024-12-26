@@ -5,6 +5,7 @@
     import lombok.Data;
     import lombok.NoArgsConstructor;
     import org.springframework.data.annotation.Id;
+    import org.springframework.data.mongodb.core.index.Indexed;
     import org.springframework.data.mongodb.core.mapping.Document;
 
     @Document(collection = "book") // Collezione "book" nel DB
@@ -14,6 +15,7 @@
     public class Book {
         @Id
         private String id;
+        @Indexed(unique = true)
         @Size(max = 50, message = "Title cannot exceed 50 characters")
         @NotBlank(message = "Title cannot be blank")
         private String title;

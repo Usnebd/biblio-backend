@@ -28,21 +28,30 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book){
-        Book savedBook = bookService.saveBook(book);
+        Book savedBook = bookService.createBook(book);
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book book) {
-        Book updatedBook = bookService.saveBook(book);
-        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteBook(@PathVariable String id) {
-        boolean result = bookService.deleteBookById(id);
-        if(!result){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Book> updateBook(@PathVariable String id, @Valid @RequestBody Book book) {
+        try {
+            bookService.updateBook(book,id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 No Content
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("Book doesn't exist")) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
+            }
+            return new ResponseEntity<>(HttpStatus.CONFLICT); // 409 Conflict
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Book> deleteBook(@PathVariable String id) {
+       try {
+           bookService.deleteBook(id);
+           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+       } catch (IllegalArgumentException e) {
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
     }
 }
